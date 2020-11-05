@@ -1,13 +1,8 @@
 package com.example.rxkotlintest
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import java.io.File
-import java.io.FileNotFoundException
-import java.nio.charset.Charset
-import kotlin.math.roundToInt
 
 fun main(){
 /*   doWork("just"){
@@ -105,7 +100,7 @@ fun main(){
         subscription.add(observer)
     }
     */
-    doWork("Never With doOnSubscribe"){
+  /*  doWork("Never With doOnSubscribe"){
         val subscription = CompositeDisposable()
         val observable: Observable<Any> = Observable.never()
         val x = observable.doOnSubscribe {
@@ -113,6 +108,95 @@ fun main(){
         }
         subscription.add(x.subscribe { println(it) })
     }
+   */
+  /*  doWork("PublishSubject"){
+        val publishSubject = PublishSubject.create<Int>()
+        val subscriberOne = publishSubject.subscribe {
+            println(it)
+        }
+        publishSubject.onNext(10)
+        publishSubject.onNext(20)
+        val subjectTwo = publishSubject.subscribe {
+            println(it)
+        }
+        publishSubject.onNext(30)
+        subscriberOne.dispose()
+        subscriberTwo.dispose()
+    }
+   */
+  /*  doWork("BehaviourSubject"){
+        val subscription = CompositeDisposable()
+        val behaviorSubject = BehaviorSubject.createDefault("Default value")
+        val subscriberOne = behaviorSubject.subscribeBy(
+            onNext = {println(it)},
+            onError = {println("error")}
+        )
+        behaviorSubject.onNext("One")
+        subscription.add(behaviorSubject.subscribeBy(
+            onNext = {println("Two")},
+            onError = {println("error")}
+        ))
+    }
+   */
+  /*  doWork("Behaviour Subject State"){
+        val subscriptions = CompositeDisposable()
+        val behaviorSubject = BehaviorSubject.createDefault(0)
+        println(behaviorSubject.value)
+        subscriptions.add(behaviorSubject.subscribeBy{
+            println(it)
+        })
+        behaviorSubject.onNext(1)
+        println(behaviorSubject.value)
+        subscriptions.dispose()
+    }
+   */
+   /* doWork("ReplaySubject"){
+        val subscriptions = CompositeDisposable()
+        val replaySubject = ReplaySubject.createWithSize<Int>(2)
+        replaySubject.onNext(1)
+        replaySubject.onNext(2)
+        replaySubject.onNext(3)
+        subscriptions.add(replaySubject.subscribeBy(
+            onNext = {println(it)},
+            onError = {println(it.message)}
+        ))
+        subscriptions.add(replaySubject.subscribeBy(
+            onNext = {println(it)},
+            onError = { println(it.message)}
+        ))
+        replaySubject.onNext(4)
+        replaySubject.onNext(5)
+    }
+    */
+   /* doWork("AsyncSubject"){
+        val subscription = CompositeDisposable()
+        val asyncSubject = AsyncSubject.create<Int>()
+        subscription.add(asyncSubject.subscribeBy(
+            onNext = {println(it)},
+            onError = {println(it.message)}
+        ))
+        asyncSubject.onNext(0)
+        asyncSubject.onNext(1)
+        asyncSubject.onNext(2)
+        asyncSubject.onNext(3)
+        asyncSubject.onComplete()
+        subscription.dispose()
+    }
+    */
+ /*   doWork("RxRelay"){
+        val subscription = CompositeDisposable()
+        val rxRelay = PublishRelay.create<Int>()
+        subscription.add(rxRelay.subscribeBy(
+            onNext = {println(it)}
+        ))
+        rxRelay.accept(1)
+        rxRelay.accept(2)
+        rxRelay.accept(3)
+        subscription.dispose()
+    }
+  */
+    println("\uD83C\uDCA1")
+
 }
 
 fun doWork(name: String, action: () -> Unit){
